@@ -4,7 +4,9 @@ v0.0.1
 
 [![Build Status](https://travis-ci.org/bnbalsamo/kaleidoscope.svg?branch=master)](https://travis-ci.org/bnbalsamo/kaleidoscope) [![Coverage Status](https://coveralls.io/repos/github/bnbalsamo/kaleidoscope/badge.svg?branch=master)](https://coveralls.io/github/bnbalsamo/kaleidoscope?branch=master)
 
-An IIIF image server
+An [IIIF](http://iiif.io/) image server.
+
+See [here](http://iiif.io/api/image/2.1/) for API details.
 
 # Debug Quickstart
 Set environmental variables appropriately

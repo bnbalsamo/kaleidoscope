@@ -36,7 +36,6 @@ API = Api(BLUEPRINT)
 
 log = logging.getLogger(__name__)
 
-
 format_map = {
     "jpg": "JPEG",
     "tif": "TIFF",
@@ -276,6 +275,40 @@ def perform_quality(img, quality_url_component):
         raise AssertionError("We should never get here")
 
 
+def generate_image_info(identifier):
+    parsed_identifier = parse_identifier_url_component(identifier)
+    img = BLUEPRINT.config['resolver'].resolve_identifier(parsed_identifier)
+    result_dict = {}
+    result_dict['@context'] = 'http://iiif.io/api/image/2/context.json'
+    result_dict['@id'] = "{}/{}".format(BLUEPRINT.config['API_URL'], identifier)
+    result_dict['protocol'] = 'http://iiif.io/api/image'
+    w, h = img.size
+    result_dict['width'] = w
+    result_dict['height'] = h
+    result_dict['profile'] = ['http://iiif.io/api/image/2/level2.json']
+    result_dict['profile'].append(
+        {
+            "formats": ["gif", "jpg", "png", "tif"],
+            "qualities": ["color", "gray", "bitonal"],
+            "supports": [
+                "baseUriRedirect", "cors", "jsonldMediaType", "mirroring",
+                "regionByPct", "regionByPx", "regionSquare",
+                "rotationArbitrary", "sizeByConfinedWh", "sizeByDistoredWh",
+                "sizeByH", "sizeByPct", "sizeByW", "sizeByWh"
+            ]
+        }
+    )
+
+    if BLUEPRINT.config.get('ATTRIBUTION_STR'):
+        result_dict['attribution'] = BLUEPRINT.config['ATTRIBUTION_STR']
+    if BLUEPRINT.config.get('LICENSE_LINK'):
+        result_dict['license'] = BLUEPRINT.config['LICENSE_LINK']
+    if BLUEPRINT.config.get('LOGO_LINK'):
+        result_dict['logo'] = BLUEPRINT.config['LOGO_LINK']
+
+    return result_dict
+
+
 class Root(Resource):
     def get(self):
         return {"Status": "Not broken!"}
@@ -322,16 +355,7 @@ class ImageRequestURI(Resource):
 
 class ImageInformationRequestURI(Resource):
     def get(self, identifier):
-        parsed_identifier = parse_identifier_url_component(identifier)
-        img = BLUEPRINT.config['resolver'].resolve_identifier(parsed_identifier)
-        result_dict = {}
-        result_dict['@context'] = 'http://iiif.io/api/image/2/context.json'
-        result_dict['@id'] = "{}/{}".format(BLUEPRINT.config['API_URL'], identifier)
-        result_dict['protocol'] = 'http://iiif.io/api/image'
-        w, h = img.size
-        result_dict['width'] = w
-        result_dict['height'] = h
-        result_dict['profile'] = ['http://iiif.io/api/image/2/level0.json']
+        result_dict = generate_image_info(identifier)
         response = make_response(
             jsonify(result_dict)
         )

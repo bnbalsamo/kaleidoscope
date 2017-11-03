@@ -13,8 +13,10 @@ class Error(Exception):
 
 
 class ParameterError(Error):
-    pass
+    err_name = "ParamterError"
+    status_code = 400
 
 
 class IdentifierResolutionError(Error):
-    pass
+    err_name = "IdentifierResolutionError"
+    status_code = 404

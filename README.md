@@ -1,6 +1,6 @@
 # kaleidoscope
 
-v0.0.1
+v0.0.2
 
 [![Build Status](https://travis-ci.org/bnbalsamo/kaleidoscope.svg?branch=master)](https://travis-ci.org/bnbalsamo/kaleidoscope) [![Coverage Status](https://coveralls.io/repos/github/bnbalsamo/kaleidoscope/badge.svg?branch=master)](https://coveralls.io/github/bnbalsamo/kaleidoscope?branch=master)
 

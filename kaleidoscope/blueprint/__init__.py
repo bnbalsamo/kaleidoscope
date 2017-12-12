@@ -24,7 +24,7 @@ from .exceptions import ParameterError, IdentifierResolutionError
 
 __author__ = "Brian Balsamo"
 __email__ = "brian@brianbalsamo.com"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 
 BLUEPRINT = Blueprint('kaleidoscope', __name__)
@@ -48,7 +48,7 @@ format_map = {
 
 
 # https://github.com/loris-imageserver/loris/blob/development/loris/webapp.py#L377
-def _import_class(self, qname):
+def _import_class(qname):
     '''Imports a class AND returns it (the class, not an instance).
     '''
     module_name = '.'.join(qname.split('.')[:-1])
